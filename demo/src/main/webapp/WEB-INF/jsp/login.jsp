@@ -84,7 +84,7 @@ $(document).ready(function(){
     });
     
     $( "#btn1" ).click(function() {
-		$("#loginform").attr("action", "/demo/Registration.htm");
+		$("#loginform").attr("action", "/demo/dologin.htm");
 		$("#loginform").submit();
 	});
     

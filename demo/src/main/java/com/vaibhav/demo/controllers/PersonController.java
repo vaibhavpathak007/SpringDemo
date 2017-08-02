@@ -14,7 +14,7 @@ import com.vaibhav.demo.dao.UserDao;
 import com.vaibhav.demo.models.Appuser;
 
 @Controller
-public class UserController {
+public class PersonController {
 
 	@Autowired
 	private UserDao userdao;

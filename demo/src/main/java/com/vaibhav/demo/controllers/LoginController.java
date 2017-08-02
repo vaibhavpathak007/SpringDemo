@@ -22,12 +22,12 @@ public class LoginController {
 	}
 	
 	
-	@RequestMapping("/Registration.htm")
+	@RequestMapping("/dologin.htm")
 	public ModelAndView doLogin(@ModelAttribute("user") Appuser user)
 	{
 		if(logindao.doLogin(user))
 		{
-			ModelAndView mv = new ModelAndView("Registration");
+			ModelAndView mv = new ModelAndView("registration");
 			return mv;
 		}
 		else
@@ -36,8 +36,19 @@ public class LoginController {
 			mv.addObject("errmsg", "invalid credentials");
 			return mv;
 		}
-		
-	
 	}
+	
+	@RequestMapping("/register.htm")
+	public String getRegisterPage()
+	{
+			return "registration";
+	}
+	
+	@RequestMapping("/search.htm")
+	public String getSearchPage()
+	{
+			return "search";
+	}
+	
 	
 }

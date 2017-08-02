@@ -36,3 +36,10 @@
 
 </body>
 </html>
+<script>
+$(document).ready(function(){
+	
+    $('#searchpage').addClass('active');
+})
+
+</script>
