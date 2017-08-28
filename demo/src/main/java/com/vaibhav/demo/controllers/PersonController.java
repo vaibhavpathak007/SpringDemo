@@ -6,29 +6,33 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import com.vaibhav.demo.dao.UserDao;
+import com.vaibhav.demo.dao.PersonDao;
 import com.vaibhav.demo.models.Appuser;
+import com.vaibhav.demo.models.PersonTO;
 
 @Controller
-public class PersonController {
+public class PersonController extends CommonController {
 
 	@Autowired
-	private UserDao userdao;
+	private PersonDao persondao;
 	
 	protected final Logger logger = Logger.getLogger(this.getClass());
 	
-	@RequestMapping("/saveuser.htm")
-	public ModelAndView saveUser(@ModelAttribute() Appuser user){
-		logger.debug("user retrived:"+ user);
-		userdao.saveUser(user);
+	@RequestMapping("/saveperson.htm")
+	public ModelAndView savePerson(@ModelAttribute() PersonTO person, BindingResult result){
+		System.out.println("person retrived:"+ person);
+		//persondao.savePerson(person);
 		ModelAndView mv = new ModelAndView("registration");
 		mv.addObject("message","saved user");
+		mv.addObject("formperson",person);
 		return mv;
 	}
+	
 	
 	@ExceptionHandler(Exception.class)
 	public ModelAndView customexception(HttpServletRequest req,  Exception ex)

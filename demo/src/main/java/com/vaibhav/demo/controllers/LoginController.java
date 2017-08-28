@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.vaibhav.demo.dao.LoginDao;
 import com.vaibhav.demo.models.Appuser;
+import com.vaibhav.demo.models.PersonTO;
 
 @Controller
 public class LoginController {
@@ -28,6 +29,7 @@ public class LoginController {
 		if(logindao.doLogin(user))
 		{
 			ModelAndView mv = new ModelAndView("registration");
+			mv.addObject("formperson",new PersonTO());
 			return mv;
 		}
 		else
