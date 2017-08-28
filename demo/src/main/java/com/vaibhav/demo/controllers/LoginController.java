@@ -1,7 +1,9 @@
 package com.vaibhav.demo.controllers;
+
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -11,7 +13,7 @@ import com.vaibhav.demo.models.Appuser;
 import com.vaibhav.demo.models.PersonTO;
 
 @Controller
-public class LoginController {
+public class LoginController extends CommonController {
 	
 	@Autowired
 	LoginDao logindao;
@@ -30,6 +32,8 @@ public class LoginController {
 		{
 			ModelAndView mv = new ModelAndView("registration");
 			mv.addObject("formperson",new PersonTO());
+			mv.addObject("languageList",getDisplayLanguages());
+			mv.addObject("hobbiesList",getDisplayHobbies());
 			return mv;
 		}
 		else

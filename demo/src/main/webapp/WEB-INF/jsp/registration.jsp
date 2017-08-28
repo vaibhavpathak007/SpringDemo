@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>    
+    pageEncoding="ISO-8859-1" isELIgnored="false"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,40 +40,31 @@
             <div class="col-md-12">
               <div class="form-group">
                   <label>Name*</label>
-                  <!-- <input type="text" name="name" class="form-control" placeholder="Name"> -->
                   <form:input path="name" class="form-control" placeholder="Name"/>
                 </div>
                 <div class="form-group">
                   <label>dob</label>
-                  <input type="text" name="dob" class="form-control" placeholder="Date of birth" >
+                  <form:input path="dob" class="form-control" placeholder="Date of birth"/>
                 </div>
                 <!-- radio -->
                 <div class="form-group">
                 <label>Gender</label>
                   <div class="radio">
                     <label>
-                      <input type="radio" name="gender" id="optionsRadios1" value="M" checked>
+                      <form:radiobutton path="gender" value="M" checked="true"/>
                       Male
                     </label>
                   </div>
                   <div class="radio">
                     <label>
-                      <input type="radio" name="gender" id="optionsRadios2" value="F">
+                      <form:radiobutton path="gender" value="F"/>
                       Female
                     </label>
                   </div>
                 </div>
 				<div class="form-group">
-                <label>Language known</label>	
-					<div class="checkbox">
-	                    <label><input type="checkbox" name ="language" value="english">English</label>
-                  	</div>
-                  	<div class="checkbox">
-	                     <label><input type="checkbox" name ="language" value="hindi">Hindi</label>
-                  	</div>
-                  	<div class="checkbox">
-	                     <label><input type="checkbox" name ="language" value="marathi">Marathi</label>
-                  	</div>
+                <label>Language known</label><br/><div>	
+                	<form:checkboxes items="${languageList}" path="language" delimiter="<br/>" />
 				</div>
 				<div class="form-group">
                 <label>Skill</label>
@@ -85,6 +77,16 @@
 		                  <th>Skill lvl</th>
 		                  <th>Last used</th>
 		                </tr>
+		                <c:forEach items="${formperson.skillto}" var="skill" varStatus="status">
+		                	<tr> <%-- <td>${skill.skillname}</td> --%>
+		                	<td><input type="text" name="skillto[${status.index}].skillname" class="form-control" value="${skill.skillname}" /></td>
+		                	<td><input type="text" name="skillto[${status.index}].experience" class="form-control" value="${skill.experience}" /></td>
+		                	<td><select name="skillto[${status.index}].level"class="form-control" >
+		                		<option value="1" ${skill.level == 1 ? 'selected="selected"' : '' }>One</option> 
+		                		<option value="2" ${skill.level == 2 ? 'selected="selected"' : '' }>More than one</option></select> 
+		                	</td>
+		                	<td><input type="text" name="skillto[${status.index}].lastused" class="form-control" value="${skill.lastused}" /></td></tr>
+		                </c:forEach>
 		              </table>
 		            </div>
 		            <!-- /.box-body -->
@@ -94,15 +96,20 @@
                 </div>
                 <div class="form-group">
                 <label>Hobbies</label>
-				<select multiple="true" class="form-control" name="hobbies">
+                <form:select path="hobbies" class="form-control" multiple="true">
+                	<form:options items="${hobbiesList}"/>
+                </form:select>
+                
+                
+				<!-- <select multiple="true" class="form-control" name="hobbies">
                     <option value="singing">Singing</option>
                     <option value="dancing">Dancing</option>
                     <option value="painting">Painting</option>
-                  </select>
+                  </select> -->
                  </div>
                  <div class="form-group">
                 <label>Address</label>
-                 <textarea name="address" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                <form:textarea path="address" class="form-control" rows="3" placeholder="Enter ..." />
 				</div>
             <!-- /.col -->
           </div>
@@ -113,6 +120,9 @@
                 <button id="submit" class="btn btn-primary">Submit</button>
               </div>
       </div>
+     </div>
+     </div>
+    
       <!-- /.box -->
     </section>
   </div>
@@ -122,6 +132,7 @@
 
 </body>
 </html>
+
 <script>
 
 $(document).ready(function(){

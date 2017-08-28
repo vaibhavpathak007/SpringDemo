@@ -1,7 +1,10 @@
 package com.vaibhav.demo.controllers;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.Log;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
@@ -24,12 +27,16 @@ public class PersonController extends CommonController {
 	protected final Logger logger = Logger.getLogger(this.getClass());
 	
 	@RequestMapping("/saveperson.htm")
-	public ModelAndView savePerson(@ModelAttribute() PersonTO person, BindingResult result){
+	public ModelAndView savePerson(@ModelAttribute() PersonTO person){
+		
 		System.out.println("person retrived:"+ person);
+		logger.debug("person retrived:"+ person);
 		//persondao.savePerson(person);
 		ModelAndView mv = new ModelAndView("registration");
 		mv.addObject("message","saved user");
 		mv.addObject("formperson",person);
+		mv.addObject("languageList",getDisplayLanguages());
+		mv.addObject("hobbiesList",getDisplayHobbies());
 		return mv;
 	}
 	
@@ -43,5 +50,6 @@ public class PersonController extends CommonController {
 		logger.fatal("Exception: "+ex);
 		return null;
 	}
+	
 	
 }
