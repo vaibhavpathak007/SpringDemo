@@ -27,10 +27,11 @@ public class PersonController extends CommonController {
 	protected final Logger logger = Logger.getLogger(this.getClass());
 	
 	@RequestMapping("/saveperson.htm")
-	public ModelAndView savePerson(@ModelAttribute() PersonTO person){
+	public ModelAndView savePerson(@ModelAttribute() PersonTO person) {
 		
 		System.out.println("person retrived:"+ person);
 		logger.debug("person retrived:"+ person);
+		//throw new ArithmeticException("not valid"); 
 		//persondao.savePerson(person);
 		ModelAndView mv = new ModelAndView("registration");
 		mv.addObject("message","saved user");
@@ -38,6 +39,7 @@ public class PersonController extends CommonController {
 		mv.addObject("languageList",getDisplayLanguages());
 		mv.addObject("hobbiesList",getDisplayHobbies());
 		return mv;
+		
 	}
 	
 	
@@ -48,7 +50,7 @@ public class PersonController extends CommonController {
 		mv.addObject("url",req.getRequestURI());
 		mv.addObject("exception",ex);
 		logger.fatal("Exception: "+ex);
-		return null;
+		return mv;
 	}
 	
 	
