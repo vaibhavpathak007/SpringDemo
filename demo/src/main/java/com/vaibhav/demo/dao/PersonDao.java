@@ -26,8 +26,18 @@ public class PersonDao {
 	public void savePerson(PersonTO person)
 	{
 		Session session = sessionfactory.getCurrentSession();
-		session.save(person);
+		session.saveOrUpdate(person);
 		logger.debug("person saved:"+ person);
+		
+	}
+	
+	@Transactional
+	public PersonTO getPerson(int id)
+	{
+		Session session = sessionfactory.getCurrentSession();
+		PersonTO pt = session.get(PersonTO.class,id);
+		logger.debug("person TO:"+ pt);
+		return pt;
 		
 	}
 	
@@ -41,6 +51,8 @@ public class PersonDao {
 		logger.fatal("Exception: "+ex);
 		return null;
 	}
+	
+	
 
 	
 }

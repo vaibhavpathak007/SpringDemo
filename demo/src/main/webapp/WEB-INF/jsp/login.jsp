@@ -73,10 +73,6 @@
 <script>
 
 $(document).ready(function(){
-	
-}); 
-
-  $(function () {
     $('input').iCheck({
       checkboxClass: 'icheckbox_square-blue',
       radioClass: 'iradio_square-blue',
@@ -88,7 +84,7 @@ $(document).ready(function(){
 		$("#loginform").submit();
 	});
     
-  });
+  })
 </script>
 </body>
 </html>

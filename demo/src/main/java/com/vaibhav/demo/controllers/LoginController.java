@@ -32,10 +32,7 @@ public class LoginController extends CommonController {
 	{
 		if(logindao.doLogin(user))
 		{
-			ModelAndView mv = new ModelAndView("registration");
-			mv.addObject("formperson",new PersonTO());
-			mv.addObject("languageList",getDisplayLanguages());
-			mv.addObject("hobbiesList",getDisplayHobbies());
+			ModelAndView mv = new ModelAndView("redirect:/register.htm");
 			request.getSession().setAttribute("loggedUser", user.getAppuserid());
 			return mv;
 		}
@@ -48,9 +45,13 @@ public class LoginController extends CommonController {
 	}
 	
 	@RequestMapping("/register.htm")
-	public String getRegisterPage()
+	public ModelAndView getRegisterPage()
 	{
-			return "registration";
+		ModelAndView mv = new ModelAndView("registration");
+		mv.addObject("formperson",new PersonTO());
+		mv.addObject("languageList",getDisplayLanguages());
+		mv.addObject("hobbiesList",getDisplayHobbies());
+		return mv;
 	}
 	
 	@RequestMapping("/search.htm")

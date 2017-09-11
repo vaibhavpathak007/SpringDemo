@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -14,7 +15,8 @@ public class SkillTO {
 
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(generator = "skill_seq_gen")
+	@SequenceGenerator(name = "skill_seq_gen", sequenceName = "skill_sequence", initialValue = 1, allocationSize = 1)
 	private int skillid;
 	private String skillname;
 	private String level;

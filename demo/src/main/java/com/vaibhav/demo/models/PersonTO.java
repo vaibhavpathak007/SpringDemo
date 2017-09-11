@@ -4,12 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -18,13 +23,26 @@ import javax.persistence.Transient;
 public class PersonTO {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(generator = "person_seq_gen")
+	@SequenceGenerator(name = "person_seq_gen", sequenceName = "person_sequence", initialValue = 1, allocationSize = 1)
 	private int personid ;
+	
 	private String name;
+	
 	private String dob;
+	
 	private String gender;
-	private String[] language;
-	private String[] hobbies;
+	
+	@ElementCollection
+	@CollectionTable(name="person_lang", joinColumns=@JoinColumn(name="personid"))
+	@Column(name="language")
+	private List<String> language;
+	
+	@ElementCollection
+	@CollectionTable(name="person_hobbies", joinColumns=@JoinColumn(name="personid"))
+	@Column(name="hobbies")
+	private List<String> hobbies;
+	
 	private String address;
 	
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="personTO")
@@ -62,19 +80,19 @@ public class PersonTO {
 		this.gender = gender;
 	}
 
-	public String[] getLanguage() {
+	public List<String> getLanguage() {
 		return language;
 	}
 
-	public void setLanguage(String[] language) {
+	public void setLanguage(List<String> language) {
 		this.language = language;
 	}
 
-	public String[] getHobbies() {
+	public List<String> getHobbies() {
 		return hobbies;
 	}
 
-	public void setHobbies(String[] hobbies) {
+	public void setHobbies(List<String> hobbies) {
 		this.hobbies = hobbies;
 	}
 
@@ -106,7 +124,7 @@ public class PersonTO {
 	@Override
 	public String toString() {
 		return "PersonTO [personid=" + personid + ", name=" + name + ", dob=" + dob + ", gender=" + gender
-				+ ", language=" + language + ", hobbies=" + hobbies + ", address=" + address + ", skillto=" + skillto
+				+ ", language2=" + language + ", hobbies2=" + hobbies + ", address=" + address + ", skillto=" + skillto
 				+ "]";
 	}
 
