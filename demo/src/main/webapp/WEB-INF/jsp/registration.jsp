@@ -152,7 +152,7 @@ $(document).ready(function(){
     })
     
     $('#submit').click(function(event){
-    	$("#registerform").attr("action", "/demo/saveperson.htm");
+    	$("#registerform").attr("action", "/demo/person/saveperson.htm");
 		$("#registerform").submit();
           })
     

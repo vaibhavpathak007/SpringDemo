@@ -20,6 +20,7 @@ import com.vaibhav.demo.models.PersonTO;
 import com.vaibhav.demo.models.SkillTO;
 
 @Controller
+@RequestMapping("/person/")
 public class PersonController extends CommonController {
 
 	@Autowired
@@ -33,10 +34,10 @@ public class PersonController extends CommonController {
 		System.out.println("person retrived:"+ person);
 		logger.debug("person retrived:"+ person);
 		for (SkillTO st : person.getSkillto()) {
-			st.setPersonTO(person);
+			st.setPersonTO(person); 
 		}
 		persondao.savePerson(person);
-		ModelAndView mv = new ModelAndView("redirect:/register.htm");
+		ModelAndView mv = new ModelAndView("redirect:/home/register.htm");
 		mv.addObject("message","Person Saved");
 		return mv;
 		
@@ -46,7 +47,7 @@ public class PersonController extends CommonController {
 	@ExceptionHandler(Exception.class)
 	public ModelAndView customexception(HttpServletRequest req,  Exception ex)
 	{
-		ModelAndView mv = new ModelAndView("error");
+		ModelAndView mv = new ModelAndView("error"); 
 		mv.addObject("url",req.getRequestURI());
 		mv.addObject("exception",ex);
 		logger.fatal("Exception: "+ex);

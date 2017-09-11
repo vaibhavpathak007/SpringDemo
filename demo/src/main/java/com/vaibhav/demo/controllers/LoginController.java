@@ -13,6 +13,7 @@ import com.vaibhav.demo.models.Appuser;
 import com.vaibhav.demo.models.PersonTO;
 
 @Controller
+@RequestMapping("/home/")
 public class LoginController extends CommonController {
 	
 	@Autowired
@@ -32,7 +33,7 @@ public class LoginController extends CommonController {
 	{
 		if(logindao.doLogin(user))
 		{
-			ModelAndView mv = new ModelAndView("redirect:/register.htm");
+			ModelAndView mv = new ModelAndView("redirect:/home/register.htm");
 			request.getSession().setAttribute("loggedUser", user.getAppuserid());
 			return mv;
 		}
