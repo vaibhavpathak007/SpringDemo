@@ -55,11 +55,7 @@ public class LoginController extends CommonController {
 		return mv;
 	}
 	
-	@RequestMapping("/search.htm")
-	public String getSearchPage()
-	{
-			return "search";
-	}
+	
 	
 	@ExceptionHandler(Exception.class)
 	public ModelAndView customexception(HttpServletRequest req,  Exception ex)

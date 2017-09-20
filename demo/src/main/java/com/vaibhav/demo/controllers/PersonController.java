@@ -1,6 +1,7 @@
 package com.vaibhav.demo.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,7 +14,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.vaibhav.demo.dao.PersonDao;
 import com.vaibhav.demo.models.Appuser;
 import com.vaibhav.demo.models.PersonTO;
@@ -43,6 +47,53 @@ public class PersonController extends CommonController {
 		
 	}
 	
+	@RequestMapping("/search.htm")
+	public ModelAndView getSearchPage()
+	{
+		String searchvalue = null;
+		ModelAndView mv = new ModelAndView("search");
+		List<PersonTO> personlist = persondao.searchPerson(searchvalue);
+		mv.addObject("personlist",personlist);
+		return mv;
+	}
+	
+	@RequestMapping("/getpersonlist.htm")
+	public ModelAndView searchPerson(@RequestParam("searchvalue") String searchvalue)
+	{
+		ModelAndView mv = new ModelAndView("search");
+		List<PersonTO> personlist = persondao.searchPerson(searchvalue);
+		mv.addObject("personlist",personlist);
+		return mv;
+	}
+	
+	@RequestMapping("/editperson.htm")
+	public ModelAndView editPerson(@RequestParam("personid") int personid)
+	{
+		ModelAndView mv = new ModelAndView("registration");
+		mv.addObject("formperson",persondao.getPerson(personid));
+		mv.addObject("languageList",getDisplayLanguages());
+		mv.addObject("hobbiesList",getDisplayHobbies());
+		return mv;
+	}
+	
+	@RequestMapping("/deleteperson.htm")
+	public ModelAndView deletePerson(@RequestParam("personid") int personid, RedirectAttributes redirectAttributes)
+	{
+		ModelAndView mv = new ModelAndView("redirect:/person/search.htm");
+		boolean state = persondao.deletePerson(personid);
+		if(state)
+		{
+			redirectAttributes.addFlashAttribute("message", "Deleted User Successfully!");
+		}
+		else {
+			redirectAttributes.addFlashAttribute("message", "Fail To Delete User!");
+		}
+		
+		return mv;
+	}
+	
+	//RedirectAttributes redirectAttributes
+	//redirectAttributes.addFlashAttribute("message", "success logout");
 	
 	@ExceptionHandler(Exception.class)
 	public ModelAndView customexception(HttpServletRequest req,  Exception ex)
